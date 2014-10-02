@@ -1,0 +1,2 @@
+tomahawk-plugin-audio-effects
+=============================
