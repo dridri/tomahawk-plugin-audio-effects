@@ -30,13 +30,14 @@ public:
 	virtual QString description() const;
 	virtual const QString pixmapPath() const;
 
+    QVector < DspPluginInterface* >* plugins();
 	static DspPlugin* instance();
 
 private:
 	static void DSPEntry( float* samples, int nb_channels, int nb_samples );
 	void DSP( float* samples, int nb_channels, int nb_samples );
 
-	QVector < DspPluginInterface* > plugins;
+	QVector < DspPluginInterface* > m_plugins;
 };
 
 }

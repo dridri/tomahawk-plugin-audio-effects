@@ -20,7 +20,7 @@ Tomahawk::Widgets::DspPlugin* Tomahawk::Widgets::DspPlugin::instance()
 
 
 Tomahawk::Widgets::DspPlugin::DspPlugin()
-	: plugins ( QVector < DspPluginInterface* >() )
+	: m_plugins ( QVector < DspPluginInterface* >() )
 {
 	tDebug() << Q_FUNC_INFO;
 	plugin_instance = this;
@@ -37,7 +37,7 @@ Tomahawk::Widgets::DspPlugin::DspPlugin()
 			QPluginLoader loader ( filename );
 			DspPluginInterface* intf = qobject_cast<DspPluginInterface*>( loader.instance() );
 			if ( intf != 0 ) {
-				plugins.append( intf );
+				m_plugins.append( intf );
 			}
 		}
 	}
@@ -82,6 +82,14 @@ Tomahawk::Widgets::DspPlugin::pixmapPath() const
 }
 
 
+QVector < DspPluginInterface* >*
+Tomahawk::Widgets::DspPlugin::plugins()
+{
+    tDebug() << Q_FUNC_INFO;
+    return &m_plugins;
+}
+
+
 void
 Tomahawk::Widgets::DspPlugin::DSPEntry( float* samples, int nb_channels, int nb_samples )
 {
@@ -92,8 +100,8 @@ Tomahawk::Widgets::DspPlugin::DSPEntry( float* samples, int nb_channels, int nb_
 void
 Tomahawk::Widgets::DspPlugin::DSP( float* samples, int nb_channels, int nb_samples )
 {
-	for ( int i = 0 ; i < plugins.count() ; i++ ) {
-		plugins.at( i )->processData( samples, nb_channels, nb_samples );
+	for ( int i = 0 ; i < m_plugins.count() ; i++ ) {
+		m_plugins.at( i )->processData( samples, nb_channels, nb_samples );
 	}
 }
 

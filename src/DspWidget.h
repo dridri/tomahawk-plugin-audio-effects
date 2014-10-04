@@ -32,6 +32,7 @@ public:
 	Tomahawk::playlistinterface_ptr playlistInterface() const { return Tomahawk::playlistinterface_ptr(); }
 	QWidget* widget(){ return this; }
 	static bool canRun(){ return true; }
+	void setWidget( QWidget* w );
 
 public slots:
 	void enable( bool en );

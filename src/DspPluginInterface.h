@@ -8,6 +8,7 @@ class DspPluginInterface
 public:
 	virtual ~DspPluginInterface(){}
 	virtual QWidget* widget() = 0;
+    virtual QString title() = 0;
 	virtual void processData( float* samples, int nb_channels, int nb_samples ) = 0;
 
 private:

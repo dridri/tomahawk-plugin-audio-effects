@@ -37,3 +37,14 @@ DspWidget::enable( bool en )
 {
 	tDebug() << Q_FUNC_INFO;
 }
+
+
+void
+DspWidget::setWidget( QWidget* w )
+{
+    tDebug() << Q_FUNC_INFO << w;
+
+    QBoxLayout* layout = new QBoxLayout( QBoxLayout::LeftToRight );
+    layout->addWidget( w );
+    m_effectsUi->widgetContainer->setLayout( layout );
+}

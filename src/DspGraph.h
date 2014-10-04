@@ -7,6 +7,8 @@
 #include <QPaintEvent>
 #include <QMouseEvent>
 
+class DspPluginInterface;
+
 class DspGraph : public QWidget
 {
 	Q_OBJECT
@@ -23,8 +25,17 @@ protected:
 	void leaveEvent( QEvent* event );
 
 private:
+    struct Box {
+        int x;
+        int y;
+        int w;
+        int h;
+        DspPluginInterface* plugin;
+    };
 	int last_x;
 	int last_y;
 	QLabel* tooltip;
+    QVector< Box > boxes;
+    int box_width;
 };
 #endif // GRAPHICEQ_H
