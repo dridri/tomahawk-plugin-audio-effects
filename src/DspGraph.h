@@ -30,6 +30,7 @@ private:
         int y;
         int w;
         int h;
+		QString title;
         DspPluginInterface* plugin;
     };
 	int last_x;
@@ -37,5 +38,6 @@ private:
 	QLabel* tooltip;
     QVector< Box > boxes;
     int box_width;
+	int current_box;
 };
 #endif // GRAPHICEQ_H

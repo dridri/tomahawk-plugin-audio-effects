@@ -39,12 +39,39 @@ DspWidget::enable( bool en )
 }
 
 
+void rm( QLayout* l )
+{
+	QLayoutItem *child;
+	while ((child = l->takeAt(0)) != 0) {
+		child->widget()->setParent( 0 );
+		if ( child->layout() ) {
+			rm( child->layout() );
+		}
+		l->removeWidget( child->widget() );
+		l->removeItem( child );
+		delete child;
+	}
+	l->deleteLater();
+	delete l;
+}
+
+
 void
 DspWidget::setWidget( QWidget* w )
 {
     tDebug() << Q_FUNC_INFO << w;
 
-    QBoxLayout* layout = new QBoxLayout( QBoxLayout::LeftToRight );
-    layout->addWidget( w );
-    m_effectsUi->widgetContainer->setLayout( layout );
+	if ( m_effectsUi->widgetContainer->layout() ) {
+		rm( m_effectsUi->widgetContainer->layout() );
+	}
+
+	QBoxLayout* layout = new QBoxLayout( QBoxLayout::LeftToRight );
+	m_effectsUi->widgetContainer->setLayout( layout );
+
+	if (!w) {
+		w = new QWidget();
+	}
+	if ( w ) {
+		m_effectsUi->widgetContainer->layout()->addWidget( w );
+	}
 }

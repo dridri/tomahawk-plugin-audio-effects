@@ -33,7 +33,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Route graph</string>
+      <string>Routing graph</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">

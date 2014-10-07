@@ -28,10 +28,8 @@ void GraphicEq::paintEvent(QPaintEvent* e)
 	int width = this->geometry().width();
 	int height = this->geometry().height();
 
-	qp.fillRect(0, 0, width, height, QBrush(QColor(40, 40, 40)));
-
-	QPen pen(QColor(140, 150, 180), 1, Qt::SolidLine);  
-	qp.setPen(pen);
+    qp.fillRect( 0, 0, width, height, QBrush(palette().color(QPalette::Base)) );
+    qp.setPen( QPen( palette().color(QPalette::Mid), 1, Qt::SolidLine ) ); 
 
 	for ( i = 0 ; i < width ; i++ )
 	{

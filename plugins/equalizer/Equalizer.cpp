@@ -39,10 +39,13 @@ Equalizer::Equalizer()
 
     bandcount = BANDS_COUNT;
     bands = new float[bandcount];
-    for ( int i = 0 ; i < bandcount ; i++ )
-    {
+    for ( int i = 0 ; i < bandcount ; i++ ) {
         bands[ i ] = 1.0f;
     }
+    preamp = 1.0f;
+
+	connect( m_equalizerUi->reset, SIGNAL( clicked() ), this, SLOT( reset() ) );
+	connect( m_equalizerUi->preamp, SIGNAL( valueChanged( int ) ), this, SLOT( setPreamp( int ) ) );
 }
 
 
@@ -66,18 +69,33 @@ Equalizer::widget()
 
 	return mainWidget;
 }
+
+
 void
-Equalizer::setPreamp(float value)
+Equalizer::reset()
 {
-  tDebug() << Q_FUNC_INFO;
-    preamp = value;
+    tDebug() << Q_FUNC_INFO;
+
+    for ( int i = 0 ; i < bandcount ; i++ ) {
+        bands[ i ] = 1.0f;
+    }
+
+    m_equalizerUi->eq->repaint();
+}
+
+
+void
+Equalizer::setPreamp(int value)
+{
+    tDebug() << Q_FUNC_INFO;
+    preamp = (value + 10) / 10.0f;
 }
 
 
 void
 Equalizer::setBand(int b, float value)
 {
-  tDebug() << Q_FUNC_INFO;
+    tDebug() << Q_FUNC_INFO;
     bands[b] = value;
 }
 
@@ -120,10 +138,10 @@ Equalizer::processData( float* samples, int nb_channels, int nb_samples )
             uint32_t start = (uint32_t)( 0.75f * ((float)j / 32.0f + 1.0f) * (float)j / 2.0f );
             uint32_t range = (uint32_t)( 0.75f * ((float)(j + 1) / 32.0f + 1.0f) * ((float)j + 1.0f) / 2.0f );
             for(k=start; k < range && k < BANDS_COUNT; k++){
-                //re[k] *= max(0.0f, min(2.0f, preamp + bands[j]));
-                //im[k] *= max(0.0f, min(2.0f, preamp + bands[j]));
-                re[k] *= max(0.0f, min(2.0f, bands[j]));
-                im[k] *= max(0.0f, min(2.0f, bands[j]));
+                re[k] *= max(0.0f, min(2.0f, preamp * bands[j]));
+                im[k] *= max(0.0f, min(2.0f, preamp * bands[j]));
+                //re[k] *= max(0.0f, min(2.0f, bands[j]));
+                //im[k] *= max(0.0f, min(2.0f, bands[j]));
             }
         }
 

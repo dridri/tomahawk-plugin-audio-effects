@@ -19,9 +19,12 @@ public:
     int bandCount() { return bandcount / 4; /* divide by 4 only with logarithmic */ }
     float* getBands() { return bands; }
     void setBand(int b, float v);
-    void setPreamp(float v);
 
     static Equalizer* instance();
+
+public slots:
+    void reset();
+    void setPreamp(int v);
 
 private:
     Ui::Equalizer* m_equalizerUi;
