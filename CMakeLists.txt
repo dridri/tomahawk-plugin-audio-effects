@@ -35,5 +35,6 @@ tomahawk_add_plugin(dsp
 )
 
 add_subdirectory( plugins/equalizer )
+add_subdirectory( plugins/loudness )
 
 install(TARGETS tomahawk_viewpage_dsp DESTINATION /usr/local/lib)
